@@ -18,7 +18,7 @@ public class Player extends Sprite{
     private Vector2 position;
 
     public Player(Texture texture, Camera camera) {
-        super(texture);
+        super(texture,30,30);
         this.texture = texture;
         this.camera = camera;
         this.deltaTime = Gdx.graphics.getDeltaTime();

@@ -7,26 +7,30 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.maps.tiled.tiles.StaticTiledMapTile;
+import com.badlogic.gdx.math.Vector2;
 import com.dmi3coder.backlog.creatures.Player;
+
+import static com.badlogic.gdx.scenes.scene2d.ui.Table.Debug.cell;
 
 public class Backlog extends ApplicationAdapter {
 	Texture img;
 	TiledMap tiledMap;
+	TiledMapTileLayer tileLayer;
 	OrthographicCamera camera;
 	TiledMapRenderer tiledMapRenderer;
 	SpriteBatch batch;
 	Player player;
 	float deltaTime;
-	public static  int x = 0;
-	public static int y = 0;
+	int mapWidth;
+	int mapHeight;
+	private Vector2 previousPosition;
 
 
 	@Override
@@ -40,10 +44,12 @@ public class Backlog extends ApplicationAdapter {
 		tiledMap = new TmxMapLoader().load("office.tmx");
 		tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
 		batch = new SpriteBatch();
-		player = new Player(new Texture("player.gif"),camera);
+		player = new Player(new Texture("player.png"),camera);
 		camera.position.set(player.getX(),player.getY(),0);
-		int mapWidth = tiledMap.getProperties().get("width",Integer.class)/2;
-		int mapHeight = tiledMap.getProperties().get("height",Integer.class)/2;
+		mapWidth = tiledMap.getProperties().get("width",Integer.class);
+		mapHeight = tiledMap.getProperties().get("height",Integer.class);
+		tileLayer = (TiledMapTileLayer) tiledMap.getLayers().get(0);
+		previousPosition = new Vector2();
 	}
 
 	@Override
@@ -65,23 +71,48 @@ public class Backlog extends ApplicationAdapter {
 		layers = new int[]{1};
 		tiledMapRenderer.render(layers);
 		handleInput(deltaTime);
+		camera.position.x = player.getX() +player.getWidth()/2;
+		camera.position.y = player.getY() +player.getHeight()/2;
+		Gdx.app.log("position",player.getX()+player.getOriginX()+" "+player.getY()+player.getOriginY());
 	}
 
 		private void handleInput(float deltaTime) {
-		if(player != null){
-			if(Gdx.input.isKeyPressed(Input.Keys.LEFT)){
-				player.setPosition(player.getX() + (-200* deltaTime), player.getY());
-			}else if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
-				player.setPosition(player.getX() + (200* deltaTime), player.getY());
-			}else if(Gdx.input.isKeyPressed(Input.Keys.UP)){
-				player.setPosition(player.getX(), player.getY() + (200 * deltaTime));
-			}else if(Gdx.input.isKeyPressed(Input.Keys.DOWN)){
-				player.setPosition(player.getX(), player.getY() + (-200 * deltaTime));
+
+			float x = player.getX();
+			float y = player.getY();
+			previousPosition.set(player.getX(),player.getY());
+			if(player != null){
+				if(Gdx.input.isKeyPressed(Input.Keys.LEFT)){
+					player.setPosition(player.getX() + (-200* deltaTime), player.getY());
+					if(tileLayer.getCell(cellPos(player.getX()),cellPos(player.getY())).getTile().getProperties().containsKey("solid")||
+							tileLayer.getCell(cellPos(player.getX()),cellPos(player.getY()+player.getHeight())).getTile().getProperties().containsKey("solid"))
+						returnToPreviousPosition(player,previousPosition);
+				}else if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
+					player.setPosition(player.getX() + (200* deltaTime), player.getY());
+					if(tileLayer.getCell(cellPos(player.getX()+player.getWidth()),cellPos(player.getY())).getTile().getProperties().containsKey("solid")||
+							tileLayer.getCell(cellPos(player.getX()+player.getWidth()),cellPos(player.getY()+player.getHeight())).getTile().getProperties().containsKey("solid"))
+						returnToPreviousPosition(player,previousPosition);
+				}else if(Gdx.input.isKeyPressed(Input.Keys.UP)){
+					player.setPosition(player.getX(), player.getY() + (200 * deltaTime));
+					if(tileLayer.getCell(cellPos(player.getX()),cellPos(player.getY()+player.getHeight())).getTile().getProperties().containsKey("solid")||
+							tileLayer.getCell(cellPos(player.getX()+player.getWidth()),cellPos(player.getY()+player.getHeight())).getTile().getProperties().containsKey("solid"))
+						returnToPreviousPosition(player,previousPosition);
+				}else if(Gdx.input.isKeyPressed(Input.Keys.DOWN)){
+					player.setPosition(player.getX(), player.getY() + (-200 * deltaTime));
+					if(tileLayer.getCell(cellPos(player.getX()),cellPos(player.getY())).getTile().getProperties().containsKey("solid")||
+							tileLayer.getCell(cellPos(player.getX()+player.getWidth()),cellPos(player.getY())).getTile().getProperties().containsKey("solid"))
+						returnToPreviousPosition(player,previousPosition);
+				}
+
 			}
 
-			camera.position.x = player.getX() +player.getWidth()/2;
-			camera.position.y = player.getY() +player.getHeight()/2;
+	}
 
-		}
+	private void returnToPreviousPosition(Sprite sprite,Vector2 previousPosition){
+		sprite.setPosition(previousPosition.x,previousPosition.y);
+	}
+
+	private int cellPos(float i){
+		return ((int) (i / 32));
 	}
 }
