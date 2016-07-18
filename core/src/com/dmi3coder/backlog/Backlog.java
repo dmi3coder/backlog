@@ -45,6 +45,7 @@ public class Backlog extends ApplicationAdapter {
 		tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
 		batch = new SpriteBatch();
 		player = new Player(new Texture("player.png"),camera);
+		player.setPosition(40,40);
 		camera.position.set(player.getX(),player.getY(),0);
 		mapWidth = tiledMap.getProperties().get("width",Integer.class);
 		mapHeight = tiledMap.getProperties().get("height",Integer.class);
@@ -108,7 +109,15 @@ public class Backlog extends ApplicationAdapter {
 
 	}
 
-	private void returnToPreviousPosition(Sprite sprite,Vector2 previousPosition){
+
+	@Override
+	public void resize(int width, int height) {
+		super.resize(width, height);
+		camera = new OrthographicCamera(width,height);
+
+	}
+
+	private void returnToPreviousPosition(Sprite sprite, Vector2 previousPosition){
 		sprite.setPosition(previousPosition.x,previousPosition.y);
 	}
 
