@@ -9,7 +9,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.Vector2;
 
-public class CollisionCreature extends Sprite{
+public abstract class CollisionCreature extends Sprite{
     private final Texture texture;
     private final TiledMapTileLayer tileLayer;
     Vector2 previousPosition;
@@ -56,11 +56,11 @@ public class CollisionCreature extends Sprite{
         return true;
     }
 
-        private void returnToPreviousPosition(){
-            setPosition(getPreviousPosition().x,getPreviousPosition().y);
-        }
+    private void returnToPreviousPosition(){
+        setPosition(getPreviousPosition().x,getPreviousPosition().y);
+    }
 
-        public static int cellPos(float i){
+    public static int cellPos(float i){
             return ((int) (i / 32));
         }
 
