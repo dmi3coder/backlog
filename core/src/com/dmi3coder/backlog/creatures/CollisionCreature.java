@@ -34,19 +34,22 @@ public abstract class CollisionCreature extends Sprite{
                 returnToPreviousPosition();
                 return false;
             }
-        } else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
             if (tileLayer.getCell(cellPos(getX() + getWidth()), cellPos(getY())).getTile().getProperties().containsKey("solid") ||
                     tileLayer.getCell(cellPos(getX() + getWidth()), cellPos(getY() + getHeight())).getTile().getProperties().containsKey("solid")) {
                 returnToPreviousPosition();
                 return false;
             }
-        } else if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
             if (tileLayer.getCell(cellPos(getX()), cellPos(getY() + getHeight())).getTile().getProperties().containsKey("solid") ||
                     tileLayer.getCell(cellPos(getX() + getWidth()), cellPos(getY() + getHeight())).getTile().getProperties().containsKey("solid")) {
                 returnToPreviousPosition();
                 return false;
             }
-        } else if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
             if (tileLayer.getCell(cellPos(getX()), cellPos(getY())).getTile().getProperties().containsKey("solid") ||
                     tileLayer.getCell(cellPos(getX() + getWidth()), cellPos(getY())).getTile().getProperties().containsKey("solid")) {
                 returnToPreviousPosition();

@@ -19,13 +19,16 @@ public class MovementCreature extends CollisionCreature {
         setPreviousPosition(new Vector2(getX(),getY()));
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
             setPosition(getX() + (-200 * deltaTime), getY());
-        } else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
             setPosition(getX() + (200 * deltaTime), getY());
 
-        } else if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
             setPosition(getX(), getY() + (200 * deltaTime));
 
-        } else if (Gdx.input.isKeyPressed(Input.Keys.DOWN)){
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.DOWN)){
             setPosition(getX(),getY()+(-200*deltaTime));
         }
         return super.handleInput(deltaTime);
