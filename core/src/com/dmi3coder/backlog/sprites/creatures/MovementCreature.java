@@ -1,4 +1,4 @@
-package com.dmi3coder.backlog.sprites;
+package com.dmi3coder.backlog.sprites.creatures;
 
 
 import com.badlogic.gdx.Gdx;

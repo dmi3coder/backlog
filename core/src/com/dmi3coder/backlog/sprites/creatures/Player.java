@@ -1,10 +1,11 @@
-package com.dmi3coder.backlog.sprites;
+package com.dmi3coder.backlog.sprites.creatures;
 
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
+import com.dmi3coder.backlog.sprites.creatures.MovementCreature;
 
-public class Player extends MovementCreature{
+public class Player extends MovementCreature {
 
     public Player(Texture texture, TiledMapTileLayer layer) {
         super(texture,layer);

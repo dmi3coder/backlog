@@ -7,14 +7,11 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.input.GestureDetector;
-import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
-import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
-import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.maps.tiled.*;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.dmi3coder.backlog.maps.techniques.MapHandler;
-import com.dmi3coder.backlog.sprites.Player;
+import com.dmi3coder.backlog.sprites.creatures.Player;
 
 public class Backlog extends ApplicationAdapter implements GestureDetector.GestureListener{
 	TiledMap tiledMap;
@@ -25,12 +22,13 @@ public class Backlog extends ApplicationAdapter implements GestureDetector.Gestu
 	Player player;
 	MapHandler mapHandler;
 	float deltaTime;
-
+	float w;
+	float h;
 
 	@Override
 	public void create () {
-		float w = Gdx.graphics.getWidth();
-		float h = Gdx.graphics.getHeight();
+		w = Gdx.graphics.getWidth();
+		h = Gdx.graphics.getHeight();
 		deltaTime = Gdx.graphics.getDeltaTime();
 		camera = new OrthographicCamera(Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
 		camera.setToOrtho(false,w,h);
@@ -80,6 +78,10 @@ public class Backlog extends ApplicationAdapter implements GestureDetector.Gestu
 
 	@Override
 	public boolean touchDown(float x, float y, int pointer, int button) {
+		Gdx.app.log("touchDown",x+" "+y);
+		float realPositionX = player.getX() - w/2 + x;
+		float realPositionY = player.getY() + h/2 - y;
+		mapHandler.doActionOnCellByRealPos(realPositionX,realPositionY);
 		return true;
 	}
 
