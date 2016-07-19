@@ -61,7 +61,7 @@ public class Backlog extends ApplicationAdapter implements GestureDetector.Gestu
 		batch.begin();
 		player.draw(batch);
 		batch.end();
-		layers = new int[]{1};
+		layers = new int[]{1,2,3};
 		tiledMapRenderer.render(layers);
 		camera.position.x = player.getX() +player.getWidth()/2;
 		camera.position.y = player.getY() +player.getHeight()/2;

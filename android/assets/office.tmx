@@ -3,7 +3,7 @@
  <tileset firstgid="1" name="floors" tilewidth="32" tileheight="32" tilecount="72" columns="9">
   <image source="floors.png" width="288" height="256"/>
  </tileset>
- <tileset firstgid="73" name="office" tilewidth="32" tileheight="32" margin="1" tilecount="361" columns="19">
+ <tileset firstgid="73" name="tiles" tilewidth="32" tileheight="32" margin="1" tilecount="361" columns="19">
   <image source="office.png" width="640" height="640"/>
   <tile id="0">
    <properties>
