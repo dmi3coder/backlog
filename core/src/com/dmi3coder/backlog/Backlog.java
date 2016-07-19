@@ -2,19 +2,22 @@ package com.dmi3coder.backlog;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
+import com.dmi3coder.backlog.creatures.CollisionCreature;
 import com.dmi3coder.backlog.creatures.Player;
 
-public class Backlog extends ApplicationAdapter {
+public class Backlog extends ApplicationAdapter implements GestureDetector.GestureListener{
 	TiledMap tiledMap;
 	TiledMapTileLayer tileLayer;
 	OrthographicCamera camera;
@@ -39,6 +42,7 @@ public class Backlog extends ApplicationAdapter {
 		tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
 		tileLayer = (TiledMapTileLayer) tiledMap.getLayers().get(0);
 		batch = new SpriteBatch();
+		Gdx.input.setInputProcessor(new GestureDetector(this));
 		player = new Player(new Texture("player.png"),tileLayer);
 		player.setPosition(40,40);
 		camera.position.set(player.getX(),player.getY(),0);
@@ -66,7 +70,6 @@ public class Backlog extends ApplicationAdapter {
 		tiledMapRenderer.render(layers);
 		camera.position.x = player.getX() +player.getWidth()/2;
 		camera.position.y = player.getY() +player.getHeight()/2;
-		Gdx.app.log("position",player.getX()+player.getOriginX()+" "+player.getY()+player.getOriginY());
 	}
 
 
@@ -77,4 +80,49 @@ public class Backlog extends ApplicationAdapter {
 
 	}
 
+
+	@Override
+	public boolean touchDown(float x, float y, int pointer, int button) {
+		return true;
+	}
+
+	@Override
+	public boolean tap(float x, float y, int count, int button) {
+		return false;
+	}
+
+	@Override
+	public boolean longPress(float x, float y) {
+		return false;
+	}
+
+	@Override
+	public boolean fling(float velocityX, float velocityY, int button) {
+		return false;
+	}
+
+	@Override
+	public boolean pan(float x, float y, float deltaX, float deltaY) {
+		return false;
+	}
+
+	@Override
+	public boolean panStop(float x, float y, int pointer, int button) {
+		return false;
+	}
+
+	@Override
+	public boolean zoom(float initialDistance, float distance) {
+		return false;
+	}
+
+	@Override
+	public boolean pinch(Vector2 initialPointer1, Vector2 initialPointer2, Vector2 pointer1, Vector2 pointer2) {
+		return false;
+	}
+
+	@Override
+	public void pinchStop() {
+
+	}
 }

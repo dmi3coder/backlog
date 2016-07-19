@@ -10,13 +10,11 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.Vector2;
 
 public abstract class CollisionCreature extends Sprite{
-    private final Texture texture;
     private final TiledMapTileLayer tileLayer;
     Vector2 previousPosition;
 
     public CollisionCreature(Texture texture, TiledMapTileLayer tileLayer){
-        super(texture);
-        this.texture = texture;
+        super(texture,30,30);
         this.tileLayer = tileLayer;
         previousPosition = new Vector2(getX(),getY());
     }
