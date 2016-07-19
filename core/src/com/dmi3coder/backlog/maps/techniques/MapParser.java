@@ -46,6 +46,7 @@ class MapParser {
                 TiledMapTileLayer.Cell cell = actionLayer.getCell(i,row);
                 if(cell != null){
                     if (cell.getTile().getProperties().get("object").equals("door")){
+                        Gdx.app.log("Parser: ","found tile");
                         actionObjects[row][i] = new Chest(cell.getTile());
                     }
                 }
@@ -59,7 +60,9 @@ class MapParser {
      * @param y tile y position of object(height)
      * @return game object
      */
-    private Object getActionObject(int x,int y){
+    public Object getActionObject(int x,int y) {
+        if(actionObjects[y][x] == null)
+            throw new NullPointerException("No such tile at x:"+x+" ,y:"+y);
         return actionObjects[y][x];
     }
 }

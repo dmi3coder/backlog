@@ -4,6 +4,8 @@ package com.dmi3coder.backlog.maps.techniques;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
+import com.dmi3coder.backlog.sprites.Object;
+import com.dmi3coder.backlog.sprites.objects.Chest;
 
 public class MapHandler {
     private TiledMap map;
@@ -47,8 +49,7 @@ public class MapHandler {
     public void doActionOnCellByRealPos(float x,float y){
         int tilePositionX = cellPos(x);
         int tilePositionY = cellPos(y);
-        TiledMapTileLayer.Cell cell = ((TiledMapTileLayer) map.getLayers().get("action")).getCell(tilePositionX,tilePositionY);
-        Gdx.app.log("action","it's me on "+tilePositionX+" "+tilePositionY);
+        parser.getActionObject(tilePositionX, tilePositionY).doOnClickAction();
     }
 
     public static int cellPos(float i){
