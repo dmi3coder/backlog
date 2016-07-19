@@ -3,66 +3,70 @@ package com.dmi3coder.backlog.creatures;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.math.Vector3;
 
-public class CollisionCreature extends Sprite implements InputProcessor {
+public class CollisionCreature extends Sprite{
+    private final Texture texture;
+    private final TiledMapTileLayer tileLayer;
+    Vector2 previousPosition;
 
-    public CollisionCreature(Texture texture){
+    public CollisionCreature(Texture texture, TiledMapTileLayer tileLayer){
         super(texture);
+        this.texture = texture;
+        this.tileLayer = tileLayer;
+        previousPosition = new Vector2(getX(),getY());
     }
 
-
     @Override
-    public boolean keyDown(int keycode) {
-        switch (keycode){
-            case Input.Keys.LEFT:
-                break;
-            case Input.Keys.RIGHT:
-                break;
-            case Input.Keys.UP:
-                break;
-            case Input.Keys.DOWN:
-                break;
+    public void draw(Batch batch) {
+        super.draw(batch);
+        handleInput(Gdx.graphics.getDeltaTime());
+    }
+
+    private boolean handleInput (float deltaTime) {
+        previousPosition.set(getX(), getY());
+
+        if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+            setPosition(getX() + (-200 * deltaTime), getY());
+            if (tileLayer.getCell(cellPos(getX()), cellPos(getY())).getTile().getProperties().containsKey("solid") ||
+                    tileLayer.getCell(cellPos(getX()), cellPos(getY() + getHeight())).getTile().getProperties().containsKey("solid")) {
+                returnToPreviousPosition();
+                return false;
+            }
+        } else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+            setPosition(getX() + (200 * deltaTime), getY());
+            if (tileLayer.getCell(cellPos(getX() + getWidth()), cellPos(getY())).getTile().getProperties().containsKey("solid") ||
+                    tileLayer.getCell(cellPos(getX() + getWidth()), cellPos(getY() + getHeight())).getTile().getProperties().containsKey("solid")) {
+                returnToPreviousPosition();
+                return false;
+            }
+        } else if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
+            setPosition(getX(), getY() + (200 * deltaTime));
+            if (tileLayer.getCell(cellPos(getX()), cellPos(getY() + getHeight())).getTile().getProperties().containsKey("solid") ||
+                    tileLayer.getCell(cellPos(getX() + getWidth()), cellPos(getY() + getHeight())).getTile().getProperties().containsKey("solid")) {
+                returnToPreviousPosition();
+                return false;
+            }
+        } else if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
+            setPosition(getX(), getY() + (-200 * deltaTime));
+            if (tileLayer.getCell(cellPos(getX()), cellPos(getY())).getTile().getProperties().containsKey("solid") ||
+                    tileLayer.getCell(cellPos(getX() + getWidth()), cellPos(getY())).getTile().getProperties().containsKey("solid")) {
+                returnToPreviousPosition();
+                return false;
+            }
         }
-        return false;
+        return true;
     }
 
-    @Override
-    public boolean keyUp(int keycode) {
-        return false;
-    }
+        private void returnToPreviousPosition(){
+            setPosition(previousPosition.x,previousPosition.y);
+        }
 
-    @Override
-    public boolean keyTyped(char character) {
-        return false;
-    }
-
-    @Override
-    public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-        return false;
-    }
-
-    @Override
-    public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-        return false;
-    }
-
-    @Override
-    public boolean touchDragged(int screenX, int screenY, int pointer) {
-        return false;
-    }
-
-    @Override
-    public boolean mouseMoved(int screenX, int screenY) {
-        return false;
-    }
-
-    @Override
-    public boolean scrolled(int amount) {
-        return false;
-    }
+        public static int cellPos(float i){
+            return ((int) (i / 32));
+        }
 }
