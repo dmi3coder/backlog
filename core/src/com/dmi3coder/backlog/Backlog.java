@@ -15,7 +15,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.dmi3coder.backlog.creatures.Player;
 
 public class Backlog extends ApplicationAdapter {
-	Texture img;
 	TiledMap tiledMap;
 	TiledMapTileLayer tileLayer;
 	OrthographicCamera camera;

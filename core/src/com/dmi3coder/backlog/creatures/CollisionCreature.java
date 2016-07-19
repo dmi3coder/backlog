@@ -27,32 +27,26 @@ public class CollisionCreature extends Sprite{
         handleInput(Gdx.graphics.getDeltaTime());
     }
 
-    private boolean handleInput (float deltaTime) {
-        previousPosition.set(getX(), getY());
-
+    protected boolean handleInput (float deltaTime) {
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-            setPosition(getX() + (-200 * deltaTime), getY());
             if (tileLayer.getCell(cellPos(getX()), cellPos(getY())).getTile().getProperties().containsKey("solid") ||
                     tileLayer.getCell(cellPos(getX()), cellPos(getY() + getHeight())).getTile().getProperties().containsKey("solid")) {
                 returnToPreviousPosition();
                 return false;
             }
         } else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-            setPosition(getX() + (200 * deltaTime), getY());
             if (tileLayer.getCell(cellPos(getX() + getWidth()), cellPos(getY())).getTile().getProperties().containsKey("solid") ||
                     tileLayer.getCell(cellPos(getX() + getWidth()), cellPos(getY() + getHeight())).getTile().getProperties().containsKey("solid")) {
                 returnToPreviousPosition();
                 return false;
             }
         } else if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
-            setPosition(getX(), getY() + (200 * deltaTime));
             if (tileLayer.getCell(cellPos(getX()), cellPos(getY() + getHeight())).getTile().getProperties().containsKey("solid") ||
                     tileLayer.getCell(cellPos(getX() + getWidth()), cellPos(getY() + getHeight())).getTile().getProperties().containsKey("solid")) {
                 returnToPreviousPosition();
                 return false;
             }
         } else if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
-            setPosition(getX(), getY() + (-200 * deltaTime));
             if (tileLayer.getCell(cellPos(getX()), cellPos(getY())).getTile().getProperties().containsKey("solid") ||
                     tileLayer.getCell(cellPos(getX() + getWidth()), cellPos(getY())).getTile().getProperties().containsKey("solid")) {
                 returnToPreviousPosition();
@@ -63,10 +57,18 @@ public class CollisionCreature extends Sprite{
     }
 
         private void returnToPreviousPosition(){
-            setPosition(previousPosition.x,previousPosition.y);
+            setPosition(getPreviousPosition().x,getPreviousPosition().y);
         }
 
         public static int cellPos(float i){
             return ((int) (i / 32));
         }
+
+    public Vector2 getPreviousPosition() {
+        return previousPosition;
+    }
+
+    public void setPreviousPosition(Vector2 previousPosition) {
+        this.previousPosition = previousPosition;
+    }
 }
