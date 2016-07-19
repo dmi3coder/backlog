@@ -2,7 +2,6 @@ package com.dmi3coder.backlog;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -14,8 +13,8 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
-import com.dmi3coder.backlog.creatures.CollisionCreature;
-import com.dmi3coder.backlog.creatures.Player;
+import com.dmi3coder.backlog.maps.techniques.MapHandler;
+import com.dmi3coder.backlog.sprites.Player;
 
 public class Backlog extends ApplicationAdapter implements GestureDetector.GestureListener{
 	TiledMap tiledMap;
@@ -24,10 +23,8 @@ public class Backlog extends ApplicationAdapter implements GestureDetector.Gestu
 	TiledMapRenderer tiledMapRenderer;
 	SpriteBatch batch;
 	Player player;
+	MapHandler mapHandler;
 	float deltaTime;
-	int mapWidth;
-	int mapHeight;
-	private Vector2 previousPosition;
 
 
 	@Override
@@ -40,16 +37,16 @@ public class Backlog extends ApplicationAdapter implements GestureDetector.Gestu
 		camera.update();
 		tiledMap = new TmxMapLoader().load("office.tmx");
 		tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
+		mapHandler = new MapHandler(tiledMap);
 		tileLayer = (TiledMapTileLayer) tiledMap.getLayers().get(0);
 		batch = new SpriteBatch();
 		Gdx.input.setInputProcessor(new GestureDetector(this));
 		player = new Player(new Texture("player.png"),tileLayer);
 		player.setPosition(40,40);
 		camera.position.set(player.getX(),player.getY(),0);
-		mapWidth = tiledMap.getProperties().get("width",Integer.class);
-		mapHeight = tiledMap.getProperties().get("height",Integer.class);
-		previousPosition = new Vector2();
 	}
+
+
 
 	@Override
 	public void render () {
