@@ -79,12 +79,12 @@ public class Backlog extends ApplicationAdapter implements GestureDetector.Gestu
 	@Override
 	public boolean touchDown(float x, float y, int pointer, int button) {
 		Gdx.app.log("touchDown",x+" "+y);
-		float realPositionX = player.getX() - w/2 + x;
-		float realPositionY = player.getY() + h/2 - y;
+		float realPositionX = player.getX()+player.getOriginX() - w/2 + x;
+		float realPositionY = player.getY()+player.getOriginY() + h/2 - y;
 		try {
 			mapHandler.doActionOnCellByRealPos(realPositionX, realPositionY);
 		}catch (NullPointerException exception){
-			// TODO: 20/07/16 make movement by click 
+			// TODO: 20/07/16 make movement by click
 		}
 		return true;
 	}
