@@ -7,8 +7,8 @@ import com.dmi3coder.backlog.maps.techniques.MapHandler;
 import com.dmi3coder.backlog.sprites.Object;
 
 public class Door extends Object{
-    public static final int DOOR_CLOSED_TILE_ID = 4;
-    public static final int DOOR_OPEN_TILE_ID = 5;
+    public static final int DOOR_CLOSED_TILE_ID = 5;
+    public static final int DOOR_OPEN_TILE_ID = 6;
     private boolean isDoorOpen = false;
 
 

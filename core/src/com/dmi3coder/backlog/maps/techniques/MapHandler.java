@@ -2,6 +2,7 @@ package com.dmi3coder.backlog.maps.techniques;
 
 
 import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileSet;
 
 public class MapHandler {

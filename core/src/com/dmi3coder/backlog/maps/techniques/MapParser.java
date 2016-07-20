@@ -11,10 +11,11 @@ import com.dmi3coder.backlog.sprites.objects.Door;
 class MapParser implements OnChangeListener {
     private MapHandler handler;
     private Object[][] actionObjects;
+    private Boolean[][] solidBlocks;
 
 
     protected enum MapLayers{
-        FLOOR("floor"),ACTION("action"),TOP("top"),OBJECT("object");
+        FLOOR("floor"),ACTION("action"),SOLID("solid"),TOP("top"),OBJECT("object");
 
         private String layerName;
         MapLayers(String layerName){
@@ -29,11 +30,24 @@ class MapParser implements OnChangeListener {
     }
     private void initMap(TiledMap map){
         initMapTextureLayer((TiledMapTileLayer) map.getLayers().get(MapLayers.FLOOR.layerName));
+        initMapSolidLayer((TiledMapTileLayer)map.getLayers().get(MapLayers.SOLID.layerName));
         initMapActionLayer((TiledMapTileLayer) map.getLayers().get(MapLayers.ACTION.layerName));
     }
 
     private void initMapTextureLayer(TiledMapTileLayer mapLayer) {
 
+    }
+
+    private void initMapSolidLayer(TiledMapTileLayer solidLayer){
+        solidBlocks = new Boolean[solidLayer.getHeight()][solidLayer.getHeight()];
+        for (int row = 0; row < solidBlocks.length; row++) {
+            for (int i = 0; i < solidBlocks[0].length; i++) {
+                TiledMapTileLayer.Cell cell = solidLayer.getCell(i,row);
+                if(cell != null){
+                    solidBlocks[row][i] = true;
+                }
+            }
+        }
     }
 
     private void initMapActionLayer(TiledMapTileLayer actionLayer) {
@@ -46,6 +60,7 @@ class MapParser implements OnChangeListener {
                         Gdx.app.log("Parser: ","found tile");
                         actionObjects[row][i] = new Door(0,cell,handler,i,row);
                         actionObjects[row][i].setOnChangeListener(this);
+                        solidBlocks[row][i] = true;
                     }
                 }
             }

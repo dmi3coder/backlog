@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.Vector2;
+import com.dmi3coder.backlog.maps.techniques.MapHandler;
 
 public abstract class CollisionCreature extends Sprite{
     private final TiledMapTileLayer tileLayer;
