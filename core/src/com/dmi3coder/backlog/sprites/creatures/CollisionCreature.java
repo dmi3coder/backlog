@@ -11,12 +11,12 @@ import com.badlogic.gdx.math.Vector2;
 import com.dmi3coder.backlog.maps.techniques.MapHandler;
 
 public abstract class CollisionCreature extends Sprite{
-    private final TiledMapTileLayer tileLayer;
     Vector2 previousPosition;
+    private MapHandler handler;
 
-    public CollisionCreature(Texture texture, TiledMapTileLayer tileLayer){
+    public CollisionCreature(Texture texture, MapHandler handler){
         super(texture,30,30);
-        this.tileLayer = tileLayer;
+        this.handler = handler;
         previousPosition = new Vector2(getX(),getY());
     }
 
@@ -28,29 +28,29 @@ public abstract class CollisionCreature extends Sprite{
 
     protected boolean handleInput (float deltaTime) {
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-            if (tileLayer.getCell(cellPos(getX()), cellPos(getY())).getTile().getProperties().containsKey("solid") ||
-                    tileLayer.getCell(cellPos(getX()), cellPos(getY() + getHeight())).getTile().getProperties().containsKey("solid")) {
+            if (handler.isCellSolidByRealPos(getX(), getY()) ||
+                    handler.isCellSolidByRealPos(getX(), getY() + getHeight())) {
                 returnToPreviousPosition();
                 return false;
             }
         }
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-            if (tileLayer.getCell(cellPos(getX() + getWidth()), cellPos(getY())).getTile().getProperties().containsKey("solid") ||
-                    tileLayer.getCell(cellPos(getX() + getWidth()), cellPos(getY() + getHeight())).getTile().getProperties().containsKey("solid")) {
+            if (handler.isCellSolidByRealPos(getX() + getWidth(), getY()) ||
+                    handler.isCellSolidByRealPos(getX() + getWidth(), getY() + getHeight())) {
                 returnToPreviousPosition();
                 return false;
             }
         }
         if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
-            if (tileLayer.getCell(cellPos(getX()), cellPos(getY() + getHeight())).getTile().getProperties().containsKey("solid") ||
-                    tileLayer.getCell(cellPos(getX() + getWidth()), cellPos(getY() + getHeight())).getTile().getProperties().containsKey("solid")) {
+            if (handler.isCellSolidByRealPos(getX(), getY() + getHeight()) ||
+                    handler.isCellSolidByRealPos(getX() + getWidth(), getY() + getHeight())) {
                 returnToPreviousPosition();
                 return false;
             }
         }
         if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
-            if (tileLayer.getCell(cellPos(getX()), cellPos(getY())).getTile().getProperties().containsKey("solid") ||
-                    tileLayer.getCell(cellPos(getX() + getWidth()), cellPos(getY())).getTile().getProperties().containsKey("solid")) {
+            if (handler.isCellSolidByRealPos(getX(), getY()) ||
+                    handler.isCellSolidByRealPos(getX() + getWidth(), getY())) {
                 returnToPreviousPosition();
                 return false;
             }

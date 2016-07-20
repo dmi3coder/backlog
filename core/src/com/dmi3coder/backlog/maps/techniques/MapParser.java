@@ -70,12 +70,31 @@ class MapParser implements OnChangeListener {
 
     @Override
     public void onTextureChanged(Object object) {
+        if(object instanceof Door){
+            solidBlocks[object.getCellY()][object.getCellX()] = ((Door) object).isDoorClosed;
+        }
         ((TiledMapTileLayer) handler.getMap().getLayers().get("action")).setCell(
                 object.getCellX(),
                 object.getCellY(),
                 object.getCell());
     }
 
+
+    public Object[][] getActionObjects() {
+        return actionObjects;
+    }
+
+    public void setActionObjects(Object[][] actionObjects) {
+        this.actionObjects = actionObjects;
+    }
+
+    public Boolean[][] getSolidBlocks() {
+        return solidBlocks;
+    }
+
+    public void setSolidBlocks(Boolean[][] solidBlocks) {
+        this.solidBlocks = solidBlocks;
+    }
 
     /**
      * Provides Objects from map of Action layer

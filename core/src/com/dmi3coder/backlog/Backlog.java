@@ -39,7 +39,7 @@ public class Backlog extends ApplicationAdapter implements GestureDetector.Gestu
 		tileLayer = (TiledMapTileLayer) tiledMap.getLayers().get(0);
 		batch = new SpriteBatch();
 		Gdx.input.setInputProcessor(new GestureDetector(this));
-		player = new Player(new Texture("player.png"),tileLayer);
+		player = new Player(new Texture("player.png"),mapHandler);
 		player.setPosition(40,40);
 		camera.position.set(player.getX(),player.getY(),0);
 	}
@@ -55,13 +55,13 @@ public class Backlog extends ApplicationAdapter implements GestureDetector.Gestu
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		camera.update();
 		tiledMapRenderer.setView(camera);
-		int[] layers = new int[]{0};
+		int[] layers = new int[]{0,2};
 		tiledMapRenderer.render(layers);
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
 		player.draw(batch);
 		batch.end();
-		layers = new int[]{1,2,3};
+		layers = new int[]{1,3};
 		tiledMapRenderer.render(layers);
 		camera.position.x = player.getX() +player.getWidth()/2;
 		camera.position.y = player.getY() +player.getHeight()/2;

@@ -1,6 +1,7 @@
 package com.dmi3coder.backlog.maps.techniques;
 
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileSet;
@@ -70,5 +71,9 @@ public class MapHandler {
 
     public void setParser(MapParser parser) {
         this.parser = parser;
+    }
+
+    public boolean isCellSolidByRealPos(float x, float y){
+        return parser.getSolidBlocks()[cellPos(y)][cellPos(x)] != null && parser.getSolidBlocks()[cellPos(y)][cellPos(x)];
     }
 }

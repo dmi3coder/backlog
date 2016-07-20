@@ -9,7 +9,7 @@ import com.dmi3coder.backlog.sprites.Object;
 public class Door extends Object{
     public static final int DOOR_CLOSED_TILE_ID = 5;
     public static final int DOOR_OPEN_TILE_ID = 6;
-    private boolean isDoorOpen = false;
+    public boolean isDoorClosed = true;
 
 
     public Door(int objectId, TiledMapTileLayer.Cell objectCell, MapHandler handler, int x, int y) {
@@ -27,9 +27,9 @@ public class Door extends Object{
 
     private void handleDoor(){
         TiledMapTileLayer.Cell cell = getCell();
-        cell.setTile(getHandler().getTileSet().getTile(isDoorOpen? DOOR_CLOSED_TILE_ID : DOOR_OPEN_TILE_ID));
+        cell.setTile(getHandler().getTileSet().getTile(!isDoorClosed ? DOOR_CLOSED_TILE_ID : DOOR_OPEN_TILE_ID));
         setCell(cell);
-        isDoorOpen = !isDoorOpen;
+        isDoorClosed = !isDoorClosed;
         callOnChangeListener(this);
     }
 
@@ -41,7 +41,7 @@ public class Door extends Object{
      * Sets status of the door
      * @param isDoorOpen true = open, false = closed
      */
-    private void setDoorOpen(boolean isDoorOpen){
-        this.isDoorOpen = isDoorOpen;
+    private void setDoorClosed(boolean isDoorOpen){
+        this.isDoorClosed = isDoorOpen;
     }
 }

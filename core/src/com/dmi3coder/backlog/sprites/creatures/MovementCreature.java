@@ -6,12 +6,13 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.Vector2;
+import com.dmi3coder.backlog.maps.techniques.MapHandler;
 
 public class MovementCreature extends CollisionCreature {
 
 
-    public MovementCreature(Texture texture, TiledMapTileLayer tileLayer) {
-        super(texture, tileLayer);
+    public MovementCreature(Texture texture, MapHandler handler) {
+        super(texture, handler);
     }
 
     @Override
