@@ -56,10 +56,8 @@ public class InventoryScreen implements Screen {
 
 	@Override
 	public void render(float delta) {
-		Gdx.gl.glClearColor(0.2f, 0.2f, 0.2f, 0f);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 
-		if (Gdx.input.isKeyPressed(Input.Keys.ANY_KEY)) {
+		if (Gdx.input.isKeyPressed(Input.Keys.I)) {
 			inventoryActor.setVisible(true);
 		}
 
