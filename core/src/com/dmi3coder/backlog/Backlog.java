@@ -1,7 +1,9 @@
 package com.dmi3coder.backlog;
 
 import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -10,10 +12,16 @@ import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.maps.tiled.*;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
+import com.dmi3coder.backlog.inventory.Inventory;
+import com.dmi3coder.backlog.inventory.InventoryScreen;
 import com.dmi3coder.backlog.maps.techniques.MapHandler;
 import com.dmi3coder.backlog.sprites.creatures.Player;
 
+import java.util.Random;
+
 public class Backlog extends ApplicationAdapter implements GestureDetector.GestureListener{
+	public static final AssetManager assets = new AssetManager();
+	public static final Random random = new Random();
 	TiledMap tiledMap;
 	TiledMapTileLayer tileLayer;
 	OrthographicCamera camera;
@@ -24,21 +32,30 @@ public class Backlog extends ApplicationAdapter implements GestureDetector.Gestu
 	float deltaTime;
 	float w;
 	float h;
+	public static final Game game = new Game() {
+
+		@Override
+		public void create() {
+			setScreen(new InventoryScreen());
+		}
+	};
 
 	@Override
 	public void create () {
 		w = Gdx.graphics.getWidth();
 		h = Gdx.graphics.getHeight();
+		Texture.setAssetManager(assets);
 		deltaTime = Gdx.graphics.getDeltaTime();
 		camera = new OrthographicCamera(Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
 		camera.setToOrtho(false,w,h);
 		camera.update();
+		game.create();
 		tiledMap = new TmxMapLoader().load("office.tmx");
 		tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
 		mapHandler = new MapHandler(tiledMap);
 		tileLayer = (TiledMapTileLayer) tiledMap.getLayers().get(0);
 		batch = new SpriteBatch();
-		Gdx.input.setInputProcessor(new GestureDetector(this));
+//		Gdx.input.setInputProcessor(new GestureDetector(this));
 		player = new Player(new Texture("player.png"),mapHandler);
 		player.setPosition(40,40);
 		camera.position.set(player.getX(),player.getY(),0);
@@ -61,6 +78,7 @@ public class Backlog extends ApplicationAdapter implements GestureDetector.Gestu
 		batch.begin();
 		player.draw(batch);
 		batch.end();
+		game.render();
 		layers = new int[]{1,3};
 		tiledMapRenderer.render(layers);
 		camera.position.x = player.getX() +player.getWidth()/2;
