@@ -49,7 +49,7 @@ public class Backlog extends ApplicationAdapter implements GestureDetector.Gestu
 		Gdx.input.setInputProcessor(new GestureDetector(this));
 		Texture.setAssetManager(assets);
 		deltaTime = Gdx.graphics.getDeltaTime();
-		camera = new OrthographicCamera(Gdx.graphics.getWidth()/2,Gdx.graphics.getHeight()/2);
+		camera = new OrthographicCamera(Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
 		camera.setToOrtho(false,w,h);
 		camera.update();
 		game.create();
