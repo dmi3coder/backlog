@@ -21,10 +21,16 @@
  */
 package com.dmi3coder.backlog.inventory;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.input.GestureDetector;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
+import com.dmi3coder.backlog.Backlog;
 
 /**
  * @author Daniel Holderbaum
@@ -35,7 +41,13 @@ public class InventoryActor extends Window {
 		super("Inventory...", skin);
 
 		TextButton closeButton = new TextButton("X", skin);
-		closeButton.addListener(new HidingClickListener(this));
+		closeButton.addListener(new ChangeListener() {
+			@Override
+			public void changed(ChangeEvent event, Actor actor) {
+				setVisible(false);
+				Gdx.input.setInputProcessor(new GestureDetector(Backlog.backlog));
+			}
+		});
 		add(closeButton).height(getPadTop());
 
 		setPosition(400, 100);

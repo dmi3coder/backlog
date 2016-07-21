@@ -42,7 +42,6 @@ public class InventoryScreen implements Screen {
 	@Override
 	public void show() {
 		stage = new Stage();
-		Gdx.input.setInputProcessor(stage);
 		Skin skin = new Skin(Gdx.files.internal("skins/uiskin.json"));
 		DragAndDrop dragAndDrop = new DragAndDrop();
 		inventoryActor = new InventoryActor(new Inventory(), dragAndDrop, skin);
@@ -58,6 +57,7 @@ public class InventoryScreen implements Screen {
 	public void render(float delta) {
 
 		if (Gdx.input.isKeyPressed(Input.Keys.I)) {
+			Gdx.input.setInputProcessor(stage);
 			inventoryActor.setVisible(true);
 		}
 

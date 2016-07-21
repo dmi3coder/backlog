@@ -22,6 +22,7 @@ import java.util.Random;
 public class Backlog extends ApplicationAdapter implements GestureDetector.GestureListener{
 	public static final AssetManager assets = new AssetManager();
 	public static final Random random = new Random();
+	public static Backlog backlog = null;
 	TiledMap tiledMap;
 	TiledMapTileLayer tileLayer;
 	OrthographicCamera camera;
@@ -42,11 +43,13 @@ public class Backlog extends ApplicationAdapter implements GestureDetector.Gestu
 
 	@Override
 	public void create () {
+		backlog = this;
 		w = Gdx.graphics.getWidth();
 		h = Gdx.graphics.getHeight();
+		Gdx.input.setInputProcessor(new GestureDetector(this));
 		Texture.setAssetManager(assets);
 		deltaTime = Gdx.graphics.getDeltaTime();
-		camera = new OrthographicCamera(Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
+		camera = new OrthographicCamera(Gdx.graphics.getWidth()/2,Gdx.graphics.getHeight()/2);
 		camera.setToOrtho(false,w,h);
 		camera.update();
 		game.create();
@@ -55,7 +58,6 @@ public class Backlog extends ApplicationAdapter implements GestureDetector.Gestu
 		mapHandler = new MapHandler(tiledMap);
 		tileLayer = (TiledMapTileLayer) tiledMap.getLayers().get(0);
 		batch = new SpriteBatch();
-//		Gdx.input.setInputProcessor(new GestureDetector(this));
 		player = new Player(new Texture("player.png"),mapHandler);
 		player.setPosition(40,40);
 		camera.position.set(player.getX(),player.getY(),0);
@@ -90,6 +92,9 @@ public class Backlog extends ApplicationAdapter implements GestureDetector.Gestu
 	public void resize(int width, int height) {
 		super.resize(width, height);
 		camera = new OrthographicCamera(width,height);
+		camera.setToOrtho(false,width,height);
+		w = width;
+		h = height;
 
 	}
 
