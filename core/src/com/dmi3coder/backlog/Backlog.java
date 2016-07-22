@@ -2,6 +2,7 @@ package com.dmi3coder.backlog;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -13,7 +14,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.dmi3coder.backlog.maps.techniques.MapHandler;
 import com.dmi3coder.backlog.sprites.creatures.Player;
 
-public class Backlog extends ApplicationAdapter implements GestureDetector.GestureListener{
+public class Backlog extends ApplicationAdapter implements GestureDetector.GestureListener,Screen{
+	MainActivity game;
 	TiledMap tiledMap;
 	TiledMapTileLayer tileLayer;
 	OrthographicCamera camera;
@@ -25,8 +27,9 @@ public class Backlog extends ApplicationAdapter implements GestureDetector.Gestu
 	float w;
 	float h;
 
-	@Override
-	public void create () {
+
+	public Backlog(MainActivity game) {
+		this.game = game;
 		w = Gdx.graphics.getWidth();
 		h = Gdx.graphics.getHeight();
 		deltaTime = Gdx.graphics.getDeltaTime();
@@ -39,15 +42,13 @@ public class Backlog extends ApplicationAdapter implements GestureDetector.Gestu
 		tileLayer = (TiledMapTileLayer) tiledMap.getLayers().get(0);
 		batch = new SpriteBatch();
 		Gdx.input.setInputProcessor(new GestureDetector(this));
-		player = new Player(new Texture("player.png"),mapHandler);
+		player = new Player(new Texture("textures/player.png"),mapHandler);
 		player.setPosition(40,40);
 		camera.position.set(player.getX(),player.getY(),0);
 	}
 
-
-
 	@Override
-	public void render () {
+	public void render(float delta) {
 		Gdx.gl.glClearColor(1, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		Gdx.gl.glClearColor(1, 0, 0, 1);
@@ -69,9 +70,19 @@ public class Backlog extends ApplicationAdapter implements GestureDetector.Gestu
 
 
 	@Override
+	public void show() {
+
+	}
+
+
+	@Override
 	public void resize(int width, int height) {
 		super.resize(width, height);
 		camera = new OrthographicCamera(width,height);
+	}
+
+	@Override
+	public void hide() {
 
 	}
 
