@@ -1,4 +1,4 @@
-package com.dmi3coder.backlog;
+package com.dmi3coder.backlog.game;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
@@ -11,6 +11,7 @@ import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.maps.tiled.*;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
+import com.dmi3coder.backlog.MainActivity;
 import com.dmi3coder.backlog.maps.techniques.MapHandler;
 import com.dmi3coder.backlog.sprites.creatures.Player;
 

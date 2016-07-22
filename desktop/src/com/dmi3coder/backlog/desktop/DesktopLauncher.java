@@ -2,7 +2,6 @@ package com.dmi3coder.backlog.desktop;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
-import com.dmi3coder.backlog.Backlog;
 import com.dmi3coder.backlog.MainActivity;
 
 public class DesktopLauncher {
