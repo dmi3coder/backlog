@@ -79,6 +79,9 @@ public class Backlog extends ApplicationAdapter implements GestureDetector.Gestu
 	public void resize(int width, int height) {
 		super.resize(width, height);
 		camera = new OrthographicCamera(width,height);
+		camera.setToOrtho(false);
+		w = width;
+		h = height;
 	}
 
 	@Override
