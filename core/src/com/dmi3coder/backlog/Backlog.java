@@ -33,7 +33,7 @@ public class Backlog extends ApplicationAdapter implements GestureDetector.Gestu
 		camera = new OrthographicCamera(Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
 		camera.setToOrtho(false,w,h);
 		camera.update();
-		tiledMap = new TmxMapLoader().load("office.tmx");
+		tiledMap = new TmxMapLoader().load("scenes/office.tmx");
 		tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
 		mapHandler = new MapHandler(tiledMap);
 		tileLayer = (TiledMapTileLayer) tiledMap.getLayers().get(0);
