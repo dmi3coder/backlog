@@ -12,7 +12,6 @@ public class MainActivity extends Game {
     public void create() {
         batch = new SpriteBatch();
         font = new BitmapFont();
-
     }
 
     @Override
